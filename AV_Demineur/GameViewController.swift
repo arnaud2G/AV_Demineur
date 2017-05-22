@@ -19,6 +19,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var cvGame: UICollectionView!
     
     var gameManager:GameManager!
+    var gameDistributionView:[CaseView]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class GameViewController: UIViewController {
         
         // On commence une nouvelle partie
         gameManager = GameManager(gameLevel: .easy)
-        
+        gameDistributionView = gameManager.gameDistribution.map{CaseView(initCase: $0)}
         
         
     }
@@ -42,7 +43,7 @@ class GameViewController: UIViewController {
 extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gameManager.gameDistribution.count
+        return gameDistributionView.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -53,11 +54,14 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineCell", for: indexPath)
         cell.contentView.layer.borderColor = UIColor.blue.cgColor
         cell.contentView.layer.borderWidth = 1
-        (cell.viewWithTag(1) as! UILabel).text = "\(gameManager.gameDistribution[indexPath.row].value)"
-        if gameManager.gameDistribution[indexPath.row].statu == .mine {
-            (cell.viewWithTag(1) as! UILabel).text = "X"
-        }
+        (cell.viewWithTag(1) as! UILabel).text = gameDistributionView[indexPath.row].caseText()
+        (cell.viewWithTag(1) as! UILabel).backgroundColor = gameDistributionView[indexPath.row].caseColor()
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(gameManager.caseCliqued(i: indexPath.row))
+        collectionView.reloadItems(at: [indexPath])
     }
 }
 

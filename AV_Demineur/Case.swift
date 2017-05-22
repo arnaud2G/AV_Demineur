@@ -7,18 +7,59 @@
 //
 
 import Foundation
+import UIKit
 
-struct Case {
+class Case {
     
     enum Statu {
         case mine
         case number
     }
-    
-    var value = 0
     var statu:Statu
+    
+    // Bool qui permet de savoir si la case est retournée
+    var isTested:Bool = false
+    
+    // current value permet de faire le décompte des mines autours de la case
+    var value:Int = 0
+    var currentValue:Int!
     
     init() {
         self.statu = .number
+    }
+    
+    func testCase() -> Bool {
+        isTested = true
+        return statu == .number
+    }
+}
+
+struct CaseView {
+    
+    let myCase:Case
+    
+    init(initCase:Case) {
+        self.myCase = initCase
+    }
+    
+    func caseText() -> String? {
+        //if myCase.isTested {
+            switch myCase.statu {
+            case .mine:
+                return "X"
+            case .number:
+                return "\(myCase.value)"
+            }
+        /*} else {
+            return nil
+        }*/
+    }
+    
+    func caseColor() -> UIColor {
+        if myCase.isTested {
+            return .darkGray
+        } else {
+            return .lightGray
+        }
     }
 }

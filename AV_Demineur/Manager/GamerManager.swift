@@ -113,6 +113,11 @@ class GameManager {
         if gameDistribution[i].statu == .mine {return false}
         return true
     }
+    
+    // On actionne une case, le retour permet de savoir si l'utilisateur à perdu
+    func caseCliqued(i:Int) -> Bool {
+        return gameDistribution[i].testCase()
+    }
 }
 
 
