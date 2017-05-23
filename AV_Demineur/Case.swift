@@ -11,6 +11,13 @@ import UIKit
 
 class Case {
     
+    enum Flag {
+        case interrogation
+        case mine
+        case none
+    }
+    var flag:Flag = .none
+    
     enum Statu {
         case mine
         case number
@@ -20,22 +27,40 @@ class Case {
     // Bool qui permet de savoir si la case est retournée
     var isTested:Bool = false
     
-    // current value permet de faire le décompte des mines autours de la case
+    // Nombre de mine autour de la case
     var value:Int = 0
-    var currentValue:Int!
     
     init(statu:Statu) {
         self.statu = statu
     }
     
+    // On attribu le nombre de mine autour de la case
     func testCase(value:Int) {
         isTested = true
         self.value = value
     }
     
+    // On test s'il s'agit d'une mine
     func testMine() -> Bool {
         isTested = true
         return statu == .mine
+    }
+    
+    // On change le flag
+    func putFlag() {
+        if isTested {return}
+        switch flag {
+        case .none:
+            flag = .mine
+        case .mine:
+            flag = .interrogation
+        case .interrogation:
+            flag = .none
+        }
+    }
+    func resetFlag() {
+        if isTested {return}
+        flag = .none
     }
 }
 
@@ -56,7 +81,14 @@ struct CaseView {
                 return "\(myCase.value)"
             }
         } else {
-            return nil
+            switch myCase.flag {
+            case .none:
+                return nil
+            case .interrogation:
+                return "?"
+            case .mine:
+                return "M"
+            }
         }
     }
     

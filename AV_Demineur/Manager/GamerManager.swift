@@ -100,8 +100,15 @@ class GameManager {
             })
     }
     
-    // MARK: - Action sur une case
+    // MARK: - Action sur une case : simple clique
     func caseCliqued(indexPath:IndexPath) {
+        
+        // On traite le cas ou la case porte un flag
+        if gameDistribution[indexPath.section][indexPath.row].flag != .none {
+            gameDistribution[indexPath.section][indexPath.row].putFlag()
+            self.delegate?.returnCase(indexPaths: [indexPath])
+            return
+        }
         
         // On test si l'utilisateur se trompe
         if gameDistribution[indexPath.section][indexPath.row].testMine() {
@@ -114,6 +121,7 @@ class GameManager {
         var caseToReturn = Array(Set(chainZeroValue(indexPath: indexPath)))
         caseToReturn.append(indexPath)
         
+        // On incrémente le compteur utilisateur
         nCaseToReturn += caseToReturn.count
         
         self.delegate?.returnCase(indexPaths: caseToReturn)
@@ -137,8 +145,20 @@ class GameManager {
                 ret.append(contentsOf: chainZeroValue(indexPath: aCase))
             }
         }
-        
         return ret
+    }
+    
+    // MARK: - Action sur une case : double clique
+    func caseLongCliqued(indexPath:IndexPath) {
+        
+        // On traite le cas ou la case porte un flag
+        if gameDistribution[indexPath.section][indexPath.row].flag != .none {
+            gameDistribution[indexPath.section][indexPath.row].resetFlag()
+        } else {
+            gameDistribution[indexPath.section][indexPath.row].putFlag()
+        }
+        
+        self.delegate?.returnCase(indexPaths: [indexPath])
     }
     
     // MARK: - Recherche des cases autour

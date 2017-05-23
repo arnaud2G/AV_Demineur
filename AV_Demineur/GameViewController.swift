@@ -33,6 +33,12 @@ class GameViewController: UIViewController {
         cvGame.delegate = self
         cvGame.dataSource = self
         
+        // Gestion du clique long pour la pose des mines
+        let lpgr:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delegate = self
+        cvGame.addGestureRecognizer(lpgr)
+        
         // On commence une nouvelle partie
         gameManager = GameManager(gameLevel: .easy)
         gameManager.delegate = self
@@ -52,7 +58,7 @@ class GameViewController: UIViewController {
 }
 
 // MARK: - Gestion de la collectionView
-extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return gameManager.gameLevel.nCase().nCol
@@ -79,6 +85,16 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         gameManager.caseCliqued(indexPath: indexPath)
+    }
+    
+    func longPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == .began {
+            
+            let touchPoint = longPressGestureRecognizer.location(in: cvGame)
+            if let indexPath = cvGame.indexPathForItem(at: touchPoint) {
+                gameManager.caseLongCliqued(indexPath: indexPath)
+            }
+        }
     }
 }
 
