@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol GameControllerProtocol {
+    func looser()
+    func winner()
+    func returnCase(indexPaths:[IndexPath])
+}
+
 class GameViewController: UIViewController {
     
     // Taille fixe car
@@ -19,7 +25,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var cvGame: UICollectionView!
     
     var gameManager:GameManager!
-    var gameDistributionView:[CaseView]!
+    var gameDistributionView:[[CaseView]]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +35,15 @@ class GameViewController: UIViewController {
         
         // On commence une nouvelle partie
         gameManager = GameManager(gameLevel: .easy)
-        gameDistributionView = gameManager.gameDistribution.map{CaseView(initCase: $0)}
-        
-        
+        gameManager.delegate = self
+        gameDistributionView = gameManager.gameDistribution.map({
+            (cases:[Case]) -> [CaseView] in
+            let casesView:[CaseView] = cases.map({
+                (aCase:Case) -> CaseView in
+                return CaseView(initCase: aCase)
+            })
+            return casesView
+        })
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -42,8 +54,13 @@ class GameViewController: UIViewController {
 // MARK: - Gestion de la collectionView
 extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return gameManager.gameLevel.nCase().nCol
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gameDistributionView.count
+        return gameManager.gameLevel.nCase().nRow
+        //return gameDistributionView.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -51,17 +68,33 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineCell", for: indexPath)
         cell.contentView.layer.borderColor = UIColor.blue.cgColor
         cell.contentView.layer.borderWidth = 1
-        (cell.viewWithTag(1) as! UILabel).text = gameDistributionView[indexPath.row].caseText()
-        (cell.viewWithTag(1) as! UILabel).backgroundColor = gameDistributionView[indexPath.row].caseColor()
+        (cell.viewWithTag(1) as! UILabel).text = gameDistributionView[indexPath.section][indexPath.row].caseText()
+        (cell.viewWithTag(1) as! UILabel).backgroundColor = gameDistributionView[indexPath.section][indexPath.row].caseColor()
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(gameManager.caseCliqued(i: indexPath.row))
-        collectionView.reloadItems(at: [indexPath])
+        gameManager.caseCliqued(indexPath: indexPath)
+    }
+}
+
+
+// MARK: - Gestion des actions de l'utilisateur
+extension GameViewController:GameControllerProtocol {
+    func looser() {
+        print("looser")
+    }
+    
+    func winner() {
+        print("winner")
+    }
+    
+    func returnCase(indexPaths: [IndexPath]) {
+        cvGame.reloadItems(at: indexPaths)
     }
 }
 

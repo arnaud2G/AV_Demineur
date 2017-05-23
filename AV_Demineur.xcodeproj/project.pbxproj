@@ -15,6 +15,7 @@
 		A522DF1C1ED21B5B002D6057 /* GamerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522DF1B1ED21B5B002D6057 /* GamerManager.swift */; };
 		A522DF1F1ED21E9F002D6057 /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522DF1E1ED21E9F002D6057 /* Case.swift */; };
 		A522DF211ED220C5002D6057 /* Int+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522DF201ED220C5002D6057 /* Int+Random.swift */; };
+		A5AA7C8F1ED45749006C04B2 /* Array+Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AA7C8E1ED45749006C04B2 /* Array+Chunk.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		A522DF1B1ED21B5B002D6057 /* GamerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GamerManager.swift; path = Manager/GamerManager.swift; sourceTree = "<group>"; };
 		A522DF1E1ED21E9F002D6057 /* Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
 		A522DF201ED220C5002D6057 /* Int+Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Random.swift"; sourceTree = "<group>"; };
+		A5AA7C8E1ED45749006C04B2 /* Array+Chunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Chunk.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				A522DF1A1ED21B49002D6057 /* Manager */,
 				A522DF081ED21B40002D6057 /* AppDelegate.swift */,
 				A522DF201ED220C5002D6057 /* Int+Random.swift */,
+				A5AA7C8E1ED45749006C04B2 /* Array+Chunk.swift */,
 				A522DF0C1ED21B40002D6057 /* Main.storyboard */,
 				A522DF0F1ED21B40002D6057 /* Assets.xcassets */,
 				A522DF111ED21B40002D6057 /* LaunchScreen.storyboard */,
@@ -171,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A522DF0B1ED21B40002D6057 /* GameViewController.swift in Sources */,
+				A5AA7C8F1ED45749006C04B2 /* Array+Chunk.swift in Sources */,
 				A522DF1F1ED21E9F002D6057 /* Case.swift in Sources */,
 				A522DF211ED220C5002D6057 /* Int+Random.swift in Sources */,
 				A522DF091ED21B40002D6057 /* AppDelegate.swift in Sources */,
@@ -338,6 +342,7 @@
 				A522DF191ED21B40002D6057 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

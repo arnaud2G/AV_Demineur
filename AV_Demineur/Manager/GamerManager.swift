@@ -11,7 +11,7 @@ import Foundation
 enum GameLevel {
     case easy, medium, hard
     
-    func nCase() -> (Int,Int) {
+    func nCase() -> (nRow:Int,nCol:Int) {
         switch self {
         case .easy:
             return (9,9)
@@ -36,12 +36,19 @@ enum GameLevel {
 
 class GameManager {
     
+    var delegate:GameControllerProtocol?
+    
     var timer:Timer?
     var gameTime:Double = 0
     
-    var nBombToDisamorce:Int!
-    var bombLocation = [Int]()
-    var gameDistribution = [Case]()
+    var nCaseToReturn:Int = 0 {
+        didSet {
+            if nCaseToReturn == gameLevel.nCase().nCol*gameLevel.nCase().nRow - gameLevel.nBombe() {
+                self.delegate?.winner()
+            }
+        }
+    }
+    var gameDistribution = [[Case]]()
     
     // A l'initialisation de la partie, on calcul la position des bombes
     let gameLevel:GameLevel
@@ -49,39 +56,41 @@ class GameManager {
         self.gameLevel = gameLevel
         initGame()
     }
+    
     private func initGame() {
         
+        self.nCaseToReturn = 0
+        
         // On cherche les bombes
+        var bombLocation = [Int]()
         var myRandomTable = [Int]()
         myRandomTable += 0..<(gameLevel.nCase().0*gameLevel.nCase().1)
-        
         for _ in 0..<gameLevel.nBombe() {
             let newIndex = myRandomTable[Int.random(lower: 0, upper: myRandomTable.count-1)]
             bombLocation.append(newIndex)
             myRandomTable.remove(at: myRandomTable.index(of: newIndex)!)
         }
         
-        initDistribution()
-    }
-    
-    // On calcul les cases
-    private func initDistribution() {
+        // On créé le tableau du jeux
+        gameDistribution = (0..<(gameLevel.nCase().nRow*gameLevel.nCase().nCol))
+            .map({(i:Int) in
+                if bombLocation.index(of: i) == nil {
+                    return Case(statu: .number)
+                } else {
+                    return Case(statu: .mine)
+                }
+            }).chunks(gameLevel.nCase().nCol)
         
-        // On créé le tableau de mine
-        gameDistribution = (0..<(gameLevel.nCase().0*gameLevel.nCase().1))
-            .map({_ in return Case()})
-        
-        // On ajoute les bombes
-        _ = bombLocation.map({
-            (i:Int) -> Void in
-            gameDistribution[i].statu = .mine
-        })
-        
-        // On incrémentes les cases autours des bombes
-        _ = bombLocation.map({
-            (i:Int) in
-            arround(i: i).map{gameDistribution[$0].value += 1}
-        })
+        // Example de test
+        print(gameDistribution
+            .flatMap{$0}
+            .filter{$0.statu == .mine}
+            .count)
+
+        print(gameDistribution
+            .flatMap{$0}
+            .filter{$0.statu == .number}
+            .count)
     }
     
     // On lance le timer
@@ -91,32 +100,63 @@ class GameManager {
             })
     }
     
-    // On récupère les cases à observer autours
-    private func arround(i:Int) -> [Int] {
+    // MARK: - Action sur une case
+    func caseCliqued(indexPath:IndexPath) {
         
-        var ret = [Int]()
+        // On test si l'utilisateur se trompe
+        if gameDistribution[indexPath.section][indexPath.row].testMine() {
+            self.delegate?.returnCase(indexPaths: [indexPath])
+            self.delegate?.looser()
+            return
+        }
         
-        // Mouai...
-        if caseShouldBeTested(i: i - gameLevel.nCase().0 - 1) {ret.append(i - gameLevel.nCase().0 - 1)}
-        if caseShouldBeTested(i: i - gameLevel.nCase().0) {ret.append(i - gameLevel.nCase().0)}
-        if caseShouldBeTested(i: i - gameLevel.nCase().0 + 1) {ret.append(i - gameLevel.nCase().0 + 1)}
-        if caseShouldBeTested(i: i-1) {ret.append(i-1)}
-        if caseShouldBeTested(i: i+1) {ret.append(i+1)}
-        if caseShouldBeTested(i: i + gameLevel.nCase().0 - 1) {ret.append(i + gameLevel.nCase().0 - 1)}
-        if caseShouldBeTested(i: i + gameLevel.nCase().0) {ret.append(i + gameLevel.nCase().0)}
-        if caseShouldBeTested(i: i + gameLevel.nCase().0 + 1) {ret.append(i + gameLevel.nCase().0 + 1)}
+        // Case à retourner
+        var caseToReturn = Array(Set(chainZeroValue(indexPath: indexPath)))
+        caseToReturn.append(indexPath)
+        
+        nCaseToReturn += caseToReturn.count
+        
+        self.delegate?.returnCase(indexPaths: caseToReturn)
+    }
+    private func chainZeroValue(indexPath:IndexPath) -> [IndexPath] {
+        
+        var ret = [IndexPath]()
+        
+        // On cherche le nombre de mine autour
+        let caseArround = getCaseArround(indexPath:indexPath)
+        let nMine = caseArround.filter{gameDistribution[$0.section][$0.row].statu == .mine}.count
+        
+        gameDistribution[indexPath.section][indexPath.row].testCase(value: nMine)
+        
+        if nMine == 0 {
+            
+            let untestedCase = caseArround.filter({!gameDistribution[$0.section][$0.row].isTested})
+            ret.append(contentsOf: untestedCase)
+            
+            for aCase in untestedCase { // On filtre pour éviter la redondance mais ce n'est pas suffisant
+                ret.append(contentsOf: chainZeroValue(indexPath: aCase))
+            }
+        }
         
         return ret
     }
-    private func caseShouldBeTested(i:Int) -> Bool {
-        if i < 0 || i >= gameLevel.nCase().0*gameLevel.nCase().1 {return false}
-        if gameDistribution[i].statu == .mine {return false}
-        return true
+    
+    // MARK: - Recherche des cases autour
+    private func getCaseArround(indexPath:IndexPath) -> [IndexPath] {
+        
+        var ret = getCaseInRawArround(section:indexPath.section, row:indexPath.row)
+        ret += getCaseInRawArround(section:indexPath.section-1, row:indexPath.row)
+        ret += getCaseInRawArround(section:indexPath.section+1, row:indexPath.row)
+        
+        return ret
     }
     
-    // On actionne une case, le retour permet de savoir si l'utilisateur à perdu
-    func caseCliqued(i:Int) -> Bool {
-        return gameDistribution[i].testCase()
+    private func getCaseInRawArround(section:Int, row:Int) -> [IndexPath] {
+        if section == -1 || section >= gameLevel.nCase().nRow {return []}
+        var ret = [IndexPath(row:row, section:section)]
+        if row-1 >= 0 {ret.append(IndexPath(row:row-1, section:section))}
+        if row+1 < gameLevel.nCase().nCol {ret.append(IndexPath(row:row+1, section:section))}
+        return ret
     }
 }
 

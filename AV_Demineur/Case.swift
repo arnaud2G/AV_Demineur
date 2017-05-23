@@ -24,13 +24,18 @@ class Case {
     var value:Int = 0
     var currentValue:Int!
     
-    init() {
-        self.statu = .number
+    init(statu:Statu) {
+        self.statu = statu
     }
     
-    func testCase() -> Bool {
+    func testCase(value:Int) {
         isTested = true
-        return statu == .number
+        self.value = value
+    }
+    
+    func testMine() -> Bool {
+        isTested = true
+        return statu == .mine
     }
 }
 
@@ -43,16 +48,16 @@ struct CaseView {
     }
     
     func caseText() -> String? {
-        //if myCase.isTested {
+        if myCase.isTested {
             switch myCase.statu {
             case .mine:
                 return "X"
             case .number:
                 return "\(myCase.value)"
             }
-        /*} else {
+        } else {
             return nil
-        }*/
+        }
     }
     
     func caseColor() -> UIColor {
