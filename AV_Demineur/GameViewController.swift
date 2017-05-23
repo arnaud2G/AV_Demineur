@@ -66,7 +66,6 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return gameManager.gameLevel.nCase().nRow
-        //return gameDistributionView.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -75,11 +74,9 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineCell", for: indexPath)
-        cell.contentView.layer.borderColor = UIColor.blue.cgColor
-        cell.contentView.layer.borderWidth = 1
-        (cell.viewWithTag(1) as! UILabel).text = gameDistributionView[indexPath.section][indexPath.row].caseText()
-        (cell.viewWithTag(1) as! UILabel).backgroundColor = gameDistributionView[indexPath.section][indexPath.row].caseColor()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellGame", for: indexPath) as! CellGame
+        cell.lblValue.text = gameDistributionView[indexPath.section][indexPath.row].caseText()
+        cell.lblValue.backgroundColor = gameDistributionView[indexPath.section][indexPath.row].caseColor()
         return cell
     }
     
@@ -123,6 +120,18 @@ extension GameViewController:GameControllerProtocol {
     
     func upChrono(time: Double) {
         self.lblTimer.text = "\(time)"
+    }
+}
+
+// MARK: - Cellule du jeux
+class CellGame:UICollectionViewCell {
+    
+    @IBOutlet weak var lblValue: UILabel!
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1
     }
 }
 

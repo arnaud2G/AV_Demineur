@@ -39,22 +39,21 @@ class GameManager {
     var delegate:GameControllerProtocol?
     
     var timer:Timer?
-    var gameTime:Double = 0
+    var gameTime:Double = 0 {
+        didSet {
+            self.delegate?.upChrono(time: gameTime)
+        }
+    }
     
     var nCaseToReturn:Int = 0 {
         didSet {
             if nCaseToReturn == gameLevel.nCase().nCol*gameLevel.nCase().nRow - gameLevel.nBombe() {
+                timer?.invalidate()
                 self.delegate?.winner()
             }
         }
     }
     var gameDistribution = [[Case]]()
-    
-    var nFlagMine:Int = 0 {
-        didSet {
-            self.delegate?.flagMine(nMine: nFlagMine)
-        }
-    }
     
     // A l'initialisation de la partie, on calcul la position des bombes
     let gameLevel:GameLevel
@@ -65,6 +64,10 @@ class GameManager {
     func initGame() {
         
         self.nCaseToReturn = 0
+        self.gameTime = 0.0
+        self.timer?.invalidate()
+        self.timer = nil
+        self.delegate?.flagMine(nMine: gameLevel.nBombe())
         
         // On cherche les bombes
         var bombLocation = [Int]()
@@ -111,23 +114,30 @@ class GameManager {
     
     // On lance le timer
     func startGame() {
-            timer = Timer.init(timeInterval: 0.01, repeats: true, block: {_ in 
-                self.gameTime += 0.01
-            })
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {
+            timer in
+            self.gameTime += timer.timeInterval
+        })
     }
     
     // MARK: - Action sur une case : simple clique
     func caseCliqued(indexPath:IndexPath) {
         
+        if timer == nil {
+            startGame()
+        }
+        
         // On traite le cas ou la case porte un flag
         if gameDistribution[indexPath.section][indexPath.row].flag != .none {
-            nFlagMine += gameDistribution[indexPath.section][indexPath.row].putFlag()
+            gameDistribution[indexPath.section][indexPath.row].putFlag()
             self.delegate?.returnCase(indexPaths: [indexPath])
+            self.delegate?.flagMine(nMine: gameLevel.nBombe() - gameDistribution.flatMap{$0}.filter{$0.flag == .mine}.count)
             return
         }
         
         // On test si l'utilisateur se trompe
         if gameDistribution[indexPath.section][indexPath.row].testMine() {
+            timer?.invalidate()
             self.delegate?.returnCase(indexPaths: [indexPath])
             self.delegate?.looser()
             return
@@ -167,13 +177,17 @@ class GameManager {
     // MARK: - Action sur une case : double clique
     func caseLongCliqued(indexPath:IndexPath) {
         
+        if timer == nil {
+            startGame()
+        }
+        
         // On traite le cas ou la case porte un flag
         if gameDistribution[indexPath.section][indexPath.row].flag != .none {
             gameDistribution[indexPath.section][indexPath.row].resetFlag()
         } else {
-            nFlagMine += gameDistribution[indexPath.section][indexPath.row].putFlag()
+            gameDistribution[indexPath.section][indexPath.row].putFlag()
         }
-        
+        self.delegate?.flagMine(nMine: gameLevel.nBombe() - gameDistribution.flatMap{$0}.filter{$0.flag == .mine}.count)
         self.delegate?.returnCase(indexPaths: [indexPath])
     }
     
