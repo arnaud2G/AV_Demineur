@@ -53,6 +53,7 @@ class GameViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     @IBAction func btnResetPressed(_ sender: Any) {
+        btnReset.setImage(#imageLiteral(resourceName: "Happy"), for: .normal)
         gameManager.initGame()
     }
 }
@@ -103,11 +104,17 @@ extension GameViewController:GameControllerProtocol {
         cvGame.reloadData()
     }
     func looser() {
-        print("looser")
+        btnReset.setImage(#imageLiteral(resourceName: "Sad"), for: .normal)
+        let alert = UIAlertController(title: nil, message: "Looooosssseeerrrrr", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func winner() {
-        print("winner")
+        btnReset.setImage(#imageLiteral(resourceName: "Cool"), for: .normal)
+        let alert = UIAlertController(title: nil, message: "GG !", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func returnCase(indexPaths: [IndexPath]) {

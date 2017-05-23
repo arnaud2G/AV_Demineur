@@ -36,8 +36,13 @@ enum GameLevel {
 
 class GameManager {
     
+    enum GameStatu {
+        case off, on, ended
+    }
+    
     var delegate:GameControllerProtocol?
     
+    var gameStatu:GameStatu = .off
     var timer:Timer?
     var gameTime:Double = 0 {
         didSet {
@@ -49,7 +54,7 @@ class GameManager {
         didSet {
             if nCaseToReturn == gameLevel.nCase().nCol*gameLevel.nCase().nRow - gameLevel.nBombe() {
                 timer?.invalidate()
-                self.delegate?.winner()
+                self.winAGame()
             }
         }
     }
@@ -63,11 +68,30 @@ class GameManager {
     
     func initGame() {
         
+        initParam()
+        initDistribution()
+        
+        // On retourne la partie
+        self.delegate?.flagMine(nMine: gameLevel.nBombe())
+        self.delegate?.startNewGame(gameDistributionView:
+            gameDistribution.map({
+                (cases:[Case]) -> [CaseView] in
+                let casesView:[CaseView] = cases.map({
+                    (aCase:Case) -> CaseView in
+                    return CaseView(initCase: aCase)
+                })
+                return casesView
+            }))
+    }
+    func initParam() {
+        
         self.nCaseToReturn = 0
         self.gameTime = 0.0
+        self.gameStatu = .off
         self.timer?.invalidate()
         self.timer = nil
-        self.delegate?.flagMine(nMine: gameLevel.nBombe())
+    }
+    func initDistribution() {
         
         // On cherche les bombes
         var bombLocation = [Int]()
@@ -94,22 +118,11 @@ class GameManager {
             .flatMap{$0}
             .filter{$0.statu == .mine}
             .count)
-
+        
         print(gameDistribution
             .flatMap{$0}
             .filter{$0.statu == .number}
             .count)
-        
-        // On retourne la partie
-        self.delegate?.startNewGame(gameDistributionView:
-            gameDistribution.map({
-                (cases:[Case]) -> [CaseView] in
-                let casesView:[CaseView] = cases.map({
-                    (aCase:Case) -> CaseView in
-                    return CaseView(initCase: aCase)
-                })
-                return casesView
-            }))
     }
     
     // On lance le timer
@@ -119,13 +132,30 @@ class GameManager {
             self.gameTime += timer.timeInterval
         })
     }
+    private func winAGame() {
+        gameStatu = .ended
+        self.delegate?.winner()
+    }
+    private func looseAGame() {
+        gameStatu = .ended
+        self.delegate?.looser()
+    }
     
     // MARK: - Action sur une case : simple clique
     func caseCliqued(indexPath:IndexPath) {
-        
-        if timer == nil {
+        switch gameStatu {
+        case .off:
+            gameStatu = .on
             startGame()
+            testCase(indexPath: indexPath)
+        case .on:
+            testCase(indexPath: indexPath)
+        case .ended:
+            return
         }
+    }
+    
+    private func testCase(indexPath:IndexPath) {
         
         // On traite le cas ou la case porte un flag
         if gameDistribution[indexPath.section][indexPath.row].flag != .none {
@@ -139,7 +169,7 @@ class GameManager {
         if gameDistribution[indexPath.section][indexPath.row].testMine() {
             timer?.invalidate()
             self.delegate?.returnCase(indexPaths: [indexPath])
-            self.delegate?.looser()
+            looseAGame()
             return
         }
         
@@ -152,6 +182,8 @@ class GameManager {
         
         self.delegate?.returnCase(indexPaths: caseToReturn)
     }
+    
+    
     private func chainZeroValue(indexPath:IndexPath) -> [IndexPath] {
         
         var ret = [IndexPath]()
@@ -177,9 +209,18 @@ class GameManager {
     // MARK: - Action sur une case : double clique
     func caseLongCliqued(indexPath:IndexPath) {
         
-        if timer == nil {
+        switch gameStatu {
+        case .off:
+            gameStatu = .on
             startGame()
+            flagCase(indexPath: indexPath)
+        case .on:
+            flagCase(indexPath: indexPath)
+        case .ended:
+            return
         }
+    }
+    private func flagCase(indexPath:IndexPath) {
         
         // On traite le cas ou la case porte un flag
         if gameDistribution[indexPath.section][indexPath.row].flag != .none {
