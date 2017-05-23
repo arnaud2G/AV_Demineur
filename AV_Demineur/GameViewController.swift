@@ -9,9 +9,12 @@
 import UIKit
 
 protocol GameControllerProtocol {
+    func startNewGame(gameDistributionView:[[CaseView]])
     func looser()
     func winner()
     func returnCase(indexPaths:[IndexPath])
+    func flagMine(nMine:Int)
+    func upChrono(time:Double)
 }
 
 class GameViewController: UIViewController {
@@ -21,6 +24,7 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var lblTimer: UILabel!
     @IBOutlet weak var lblScore: UILabel!
+    @IBOutlet weak var btnReset: UIButton!
     
     @IBOutlet weak var cvGame: UICollectionView!
     
@@ -42,18 +46,14 @@ class GameViewController: UIViewController {
         // On commence une nouvelle partie
         gameManager = GameManager(gameLevel: .easy)
         gameManager.delegate = self
-        gameDistributionView = gameManager.gameDistribution.map({
-            (cases:[Case]) -> [CaseView] in
-            let casesView:[CaseView] = cases.map({
-                (aCase:Case) -> CaseView in
-                return CaseView(initCase: aCase)
-            })
-            return casesView
-        })
+        gameManager.initGame()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @IBAction func btnResetPressed(_ sender: Any) {
+        gameManager.initGame()
     }
 }
 
@@ -101,6 +101,10 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
 
 // MARK: - Gestion des actions de l'utilisateur
 extension GameViewController:GameControllerProtocol {
+    func startNewGame(gameDistributionView:[[CaseView]]) {
+        self.gameDistributionView = gameDistributionView
+        cvGame.reloadData()
+    }
     func looser() {
         print("looser")
     }
@@ -111,6 +115,14 @@ extension GameViewController:GameControllerProtocol {
     
     func returnCase(indexPaths: [IndexPath]) {
         cvGame.reloadItems(at: indexPaths)
+    }
+    
+    func flagMine(nMine: Int) {
+        self.lblScore.text = "\(nMine)"
+    }
+    
+    func upChrono(time: Double) {
+        self.lblTimer.text = "\(time)"
     }
 }
 

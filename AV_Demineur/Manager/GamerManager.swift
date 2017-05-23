@@ -50,14 +50,19 @@ class GameManager {
     }
     var gameDistribution = [[Case]]()
     
+    var nFlagMine:Int = 0 {
+        didSet {
+            self.delegate?.flagMine(nMine: nFlagMine)
+        }
+    }
+    
     // A l'initialisation de la partie, on calcul la position des bombes
     let gameLevel:GameLevel
     init(gameLevel:GameLevel) {
         self.gameLevel = gameLevel
-        initGame()
     }
     
-    private func initGame() {
+    func initGame() {
         
         self.nCaseToReturn = 0
         
@@ -91,6 +96,17 @@ class GameManager {
             .flatMap{$0}
             .filter{$0.statu == .number}
             .count)
+        
+        // On retourne la partie
+        self.delegate?.startNewGame(gameDistributionView:
+            gameDistribution.map({
+                (cases:[Case]) -> [CaseView] in
+                let casesView:[CaseView] = cases.map({
+                    (aCase:Case) -> CaseView in
+                    return CaseView(initCase: aCase)
+                })
+                return casesView
+            }))
     }
     
     // On lance le timer
@@ -105,7 +121,7 @@ class GameManager {
         
         // On traite le cas ou la case porte un flag
         if gameDistribution[indexPath.section][indexPath.row].flag != .none {
-            gameDistribution[indexPath.section][indexPath.row].putFlag()
+            nFlagMine += gameDistribution[indexPath.section][indexPath.row].putFlag()
             self.delegate?.returnCase(indexPaths: [indexPath])
             return
         }
@@ -155,7 +171,7 @@ class GameManager {
         if gameDistribution[indexPath.section][indexPath.row].flag != .none {
             gameDistribution[indexPath.section][indexPath.row].resetFlag()
         } else {
-            gameDistribution[indexPath.section][indexPath.row].putFlag()
+            nFlagMine += gameDistribution[indexPath.section][indexPath.row].putFlag()
         }
         
         self.delegate?.returnCase(indexPaths: [indexPath])

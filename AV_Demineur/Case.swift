@@ -47,20 +47,24 @@ class Case {
     }
     
     // On change le flag
-    func putFlag() {
-        if isTested {return}
+    func putFlag() -> Int {
+        if isTested {return 0}
         switch flag {
         case .none:
             flag = .mine
+            return 1
         case .mine:
             flag = .interrogation
+            return -1
         case .interrogation:
             flag = .none
+            return 0
         }
     }
-    func resetFlag() {
-        if isTested {return}
+    func resetFlag() -> Int {
+        if isTested {return 0}
         flag = .none
+        return 0
     }
 }
 
