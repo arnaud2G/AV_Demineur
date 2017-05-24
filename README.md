@@ -15,17 +15,17 @@ La classe CaseView s'occupe de renseigner la description graphique d'une case
 La classe GameManager s'occupe de la gestion du jeux, de l'initialisation jusqu'à la fin de la partie.
 La classe GameViewController fait le lien entre la vue, le GameManger et les Case
 
-Le graphique n'a pas été travaillé sur les écran de Menu et Règle. Seul le terrain de jeux a été travaillé en utilisant un CustomLayout qui permet d'optimiser le terrain par rapport à l'ecran.
+Le graphique n'a pas été travaillé sur les écran de Menu et Règle. Seul le terrain de jeux a été travaillé en utilisant un CustomLayout qui permet d'optimiser le terrain par rapport à l'ecran. Pas de mode paysage et les modes medium/hard necessite un scoll horizontale.
 
 J'ai réalisé le travail en 5 fois (environ 6-7 heures) :
-2*45 min pour déblayer le terrain et réflechir à l'architecture
-3 heures pour coder le mécanisme du jeux en mode facile
-1 heure pour créer le custom layout pour permettre le fonctionnement des modes mediums et hard
-30 minutes de refacto
+- 2*45 min pour déblayer le terrain et réflechir à l'architecture
+- 3 heures pour coder le mécanisme du jeux en mode facile
+- 1 heure pour créer le custom layout pour permettre le fonctionnement des modes mediums et hard
+- 30 minutes de refacto
 
-Pour moi le gros point à améliorer est le chénage lorsque l'utilisateur tombe sur un 0. Ma méthode n'ai pas optimisé, des cases sont testées plusieurs fois (du au fait que je lance les tests en parrallèle)
+Pour moi le gros point à améliorer est le chainage lorsque l'utilisateur tombe sur un 0. Ma méthode n'ai pas optimisé, des cases sont testées plusieurs fois (du fait que je lance les tests en parrallèle)
 Plus généralement la partie retournement des mines pourraient être plus découpée.
 
-Voila. J'espère que le jeux vous plaiera. J'attends vos retours et reste à votre dispositions.
+Voila. J'espère que le jeux vous plaiera. J'attends vos retours et reste à votre disposition.
 
 Arnaud (meilleurs score en facile : 22s)
