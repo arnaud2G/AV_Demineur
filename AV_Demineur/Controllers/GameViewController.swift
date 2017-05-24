@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Interface entre le GameManager et le GameViewController
 protocol GameControllerProtocol:class {
     func startNewGame(gameDistributionView:[[CaseView]])
     func looser()

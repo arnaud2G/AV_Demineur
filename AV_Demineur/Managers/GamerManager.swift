@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// GameLevel fournit les informations en fonction de la difficulté du jeux
 enum GameLevel {
     case easy, medium, hard
     
@@ -46,6 +47,7 @@ enum GameLevel {
     }
 }
 
+// S'occupe de la gestion de la partie
 class GameManager {
     
     enum GameStatu {
@@ -186,7 +188,7 @@ class GameManager {
         }
         
         // Case à retourner
-        var caseToReturn = Array(Set(chainZeroValue(indexPath: indexPath)))
+        var caseToReturn = Array(Set(testCaseAndChainIfNeeded(indexPath: indexPath)))
         caseToReturn.append(indexPath)
         
         // On incrémente le compteur utilisateur
@@ -194,7 +196,8 @@ class GameManager {
         
         self.delegate?.returnCase(indexPaths: caseToReturn)
     }
-    private func chainZeroValue(indexPath:IndexPath) -> [IndexPath] {
+    // Fonction testant l'existance de mine autour de la case. S'il n'y en a pas on chaine pour retourner les cases autours
+    private func testCaseAndChainIfNeeded(indexPath:IndexPath) -> [IndexPath] {
         
         var ret = [IndexPath]()
         
@@ -206,11 +209,11 @@ class GameManager {
         
         if nMine == 0 {
             
-            let untestedCase = caseArround.filter({!gameDistribution[$0.section][$0.row].isTested})
+            let untestedCase = caseArround.filter({!(gameDistribution[$0.section][$0.row].flag == .value)})
             ret.append(contentsOf: untestedCase)
             
             for aCase in untestedCase { // On filtre pour éviter la redondance mais ce n'est pas suffisant
-                ret.append(contentsOf: chainZeroValue(indexPath: aCase))
+                ret.append(contentsOf: testCaseAndChainIfNeeded(indexPath: aCase))
             }
         }
         return ret

@@ -11,13 +11,16 @@ import UIKit
 
 class Case {
     
+    // Le flag correspond au statu donné par l'utilisateur
     enum Flag {
         case interrogation
         case mine
+        case value
         case none
     }
     var flag:Flag = .none
     
+    // Le statu correspond au statu donné par l'ordinateur et initialisé au début de la partie
     enum Statu {
         case mine
         case number
@@ -25,7 +28,7 @@ class Case {
     var statu:Statu
     
     // Bool qui permet de savoir si la case est retournée
-    var isTested:Bool = false
+    //var isTested:Bool = false
     
     // Nombre de mine autour de la case
     var value:Int = 0
@@ -36,19 +39,18 @@ class Case {
     
     // On attribu le nombre de mine autour de la case
     func testCase(value:Int) {
-        isTested = true
+        flag = .value
         self.value = value
     }
     
     // On test s'il s'agit d'une mine
     func testMine() -> Bool {
-        isTested = true
+        flag = .value
         return statu == .mine
     }
     
     // On change le flag
     func putFlag() {
-        if isTested {return}
         switch flag {
         case .none:
             flag = .mine
@@ -56,11 +58,17 @@ class Case {
             flag = .interrogation
         case .interrogation:
             flag = .none
+        case .value:
+            return
         }
     }
     func resetFlag() {
-        if isTested {return}
-        flag = .none
+        switch flag {
+        case .value:
+            return
+        default:
+            flag = .none
+        }
     }
 }
 
@@ -75,7 +83,14 @@ struct CaseView {
     }
     
     func caseText() -> String? {
-        if myCase.isTested {
+        switch myCase.flag {
+        case .none:
+            return nil
+        case .interrogation:
+            return "?"
+        case .mine:
+            return "💣"
+        case .value:
             switch myCase.statu {
             case .mine:
                 return "X"
@@ -86,30 +101,23 @@ struct CaseView {
                     return "\(myCase.value)"
                 }
             }
-        } else {
-            switch myCase.flag {
-            case .none:
-                return nil
-            case .interrogation:
-                return "?"
-            case .mine:
-                return "💣"
-            }
         }
     }
     
     func caseColor() -> UIColor {
-        if myCase.isTested || myCase.flag != .none {
+        switch myCase.flag {
+        case .value, .mine, .interrogation:
             return .lightGray
-        } else {
+        case .none:
             return .darkGray
         }
     }
     
     func textColor() -> UIColor {
-        if myCase.isTested || myCase.flag != .none {
+        switch myCase.flag {
+        case .value:
             return CaseView.tColor[myCase.value]
-        } else {
+        default:
             return .black
         }
     }
