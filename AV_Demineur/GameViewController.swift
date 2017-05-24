@@ -99,6 +99,7 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     }
 }
 
+// MARK: - Gestion du custom auto layout
 extension GameViewController:DemineurLayoutProtocol {
     func sizeOfCell() -> CGSize {
         return gameManager.gameLevel.sizeCase(inCollectionView: cvGame)
@@ -107,7 +108,6 @@ extension GameViewController:DemineurLayoutProtocol {
     func numberOfItems() -> Int {
         return gameManager.gameLevel.nCase().nCol
     }
-
     
     func numberOfSections() -> Int{
         return gameManager.gameLevel.nCase().nRow
