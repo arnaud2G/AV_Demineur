@@ -3,8 +3,8 @@
 Salut Madjoh
 
 Je viens de terminer l'application démineur. Je n'ai pas utiliser de bibliothèque externe donc pour installer il de cloner ce repertoire git :
-  $ git initil
-  $ git clone https://github.com/arnaud2G/AV_Demineur.git
+  - $ git init
+  - $ git clone https://github.com/arnaud2G/AV_Demineur.git
   
 Le jeux fonctionne dans les 3 difficultés connues du démineur mais pourrait également marcher en mode custom ou l'utilisateur donnerait le nombre de ligne/colonne/bombe
 
