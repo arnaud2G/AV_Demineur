@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol GameControllerProtocol {
+protocol GameControllerProtocol:class {
     func startNewGame(gameDistributionView:[[CaseView]])
     func looser()
     func winner()
@@ -19,23 +19,30 @@ protocol GameControllerProtocol {
 
 class GameViewController: UIViewController {
     
-    // Taille fixe car
-    let size:CGFloat = UIScreen.main.bounds.width/CGFloat(GameLevel.easy.nCase().0)
-    
     @IBOutlet weak var lblTimer: UILabel!
     @IBOutlet weak var lblScore: UILabel!
     @IBOutlet weak var btnReset: UIButton!
     
     @IBOutlet weak var cvGame: UICollectionView!
     
+    var gameLevel:GameLevel!
     var gameManager:GameManager!
-    var gameDistributionView:[[CaseView]]!
+    var gameDistributionView = [[CaseView]]()
+    
+    deinit {
+        print("deinit GameViewController")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         cvGame.delegate = self
         cvGame.dataSource = self
+        
+        if let layout = cvGame.collectionViewLayout as? DemineurLayout {
+            layout.delegate = self
+        }
+        
         
         // Gestion du clique long pour la pose des mines
         let lpgr:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
@@ -44,7 +51,7 @@ class GameViewController: UIViewController {
         cvGame.addGestureRecognizer(lpgr)
         
         // On commence une nouvelle partie
-        gameManager = GameManager(gameLevel: .easy)
+        gameManager = GameManager(gameLevel: gameLevel)
         gameManager.delegate = self
         gameManager.initGame()
     }
@@ -61,17 +68,18 @@ class GameViewController: UIViewController {
 // MARK: - Gestion de la collectionView
 extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return gameManager.gameLevel.nCase().nCol
-    }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return gameManager.gameLevel.nCase().nRow
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: size, height: size)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return gameManager.gameLevel.nCase().nCol
     }
+    
+    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return gameManager.gameLevel.sizeCase()
+    }*/
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -93,6 +101,21 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
                 gameManager.caseLongCliqued(indexPath: indexPath)
             }
         }
+    }
+}
+
+extension GameViewController:DemineurLayoutProtocol {
+    func sizeOfCell() -> CGSize {
+        return gameManager.gameLevel.sizeCase(inCollectionView: cvGame)
+    }
+    
+    func numberOfItems() -> Int {
+        return gameManager.gameLevel.nCase().nCol
+    }
+
+    
+    func numberOfSections() -> Int{
+        return gameManager.gameLevel.nCase().nRow
     }
 }
 
@@ -141,4 +164,5 @@ class CellGame:UICollectionViewCell {
         self.layer.borderWidth = 1
     }
 }
+
 

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum GameLevel {
     case easy, medium, hard
@@ -18,7 +19,7 @@ enum GameLevel {
         case .medium:
             return (16,16)
         case .hard:
-            return (30,16)
+            return (16,30)
         }
     }
     
@@ -32,6 +33,17 @@ enum GameLevel {
             return 100
         }
     }
+    
+    func sizeCase(inCollectionView collectionView:UICollectionView) -> CGSize {
+        switch self {
+        case .easy:
+            let size:CGFloat = (collectionView.frame.size.width)/CGFloat(self.nCase().nCol)
+            return CGSize(width: size, height: size)
+        case .medium, .hard:
+            let size:CGFloat = (collectionView.frame.size.height)/CGFloat(self.nCase().nRow)
+            return CGSize(width: size, height: size)
+        }
+    }
 }
 
 class GameManager {
@@ -40,7 +52,7 @@ class GameManager {
         case off, on, ended
     }
     
-    var delegate:GameControllerProtocol?
+    weak var delegate:GameControllerProtocol?
     
     var gameStatu:GameStatu = .off
     var timer:Timer?
@@ -182,8 +194,6 @@ class GameManager {
         
         self.delegate?.returnCase(indexPaths: caseToReturn)
     }
-    
-    
     private func chainZeroValue(indexPath:IndexPath) -> [IndexPath] {
         
         var ret = [IndexPath]()

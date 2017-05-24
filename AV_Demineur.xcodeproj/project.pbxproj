@@ -15,7 +15,9 @@
 		A522DF1C1ED21B5B002D6057 /* GamerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522DF1B1ED21B5B002D6057 /* GamerManager.swift */; };
 		A522DF1F1ED21E9F002D6057 /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522DF1E1ED21E9F002D6057 /* Case.swift */; };
 		A522DF211ED220C5002D6057 /* Int+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522DF201ED220C5002D6057 /* Int+Random.swift */; };
+		A543C15F1ED501DE00203115 /* DemineurCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A543C15E1ED501DE00203115 /* DemineurCustomLayout.swift */; };
 		A5AA7C8F1ED45749006C04B2 /* Array+Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AA7C8E1ED45749006C04B2 /* Array+Chunk.swift */; };
+		A5DAB0B11ED4A6660016DD9A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DAB0B01ED4A6660016DD9A /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +31,9 @@
 		A522DF1B1ED21B5B002D6057 /* GamerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GamerManager.swift; path = Manager/GamerManager.swift; sourceTree = "<group>"; };
 		A522DF1E1ED21E9F002D6057 /* Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
 		A522DF201ED220C5002D6057 /* Int+Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Random.swift"; sourceTree = "<group>"; };
+		A543C15E1ED501DE00203115 /* DemineurCustomLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemineurCustomLayout.swift; sourceTree = "<group>"; };
 		A5AA7C8E1ED45749006C04B2 /* Array+Chunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Chunk.swift"; sourceTree = "<group>"; };
+		A5DAB0B01ED4A6660016DD9A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				A522DF0A1ED21B40002D6057 /* GameViewController.swift */,
+				A543C15E1ED501DE00203115 /* DemineurCustomLayout.swift */,
+				A5DAB0B01ED4A6660016DD9A /* MenuViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -176,9 +182,11 @@
 				A522DF0B1ED21B40002D6057 /* GameViewController.swift in Sources */,
 				A5AA7C8F1ED45749006C04B2 /* Array+Chunk.swift in Sources */,
 				A522DF1F1ED21E9F002D6057 /* Case.swift in Sources */,
+				A5DAB0B11ED4A6660016DD9A /* MenuViewController.swift in Sources */,
 				A522DF211ED220C5002D6057 /* Int+Random.swift in Sources */,
 				A522DF091ED21B40002D6057 /* AppDelegate.swift in Sources */,
 				A522DF1C1ED21B5B002D6057 /* GamerManager.swift in Sources */,
+				A543C15F1ED501DE00203115 /* DemineurCustomLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

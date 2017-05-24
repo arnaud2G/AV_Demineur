@@ -78,7 +78,11 @@ struct CaseView {
             case .mine:
                 return "X"
             case .number:
-                return "\(myCase.value)"
+                if myCase.value == 0 {
+                    return nil
+                } else {
+                    return "\(myCase.value)"
+                }
             }
         } else {
             switch myCase.flag {
@@ -87,16 +91,16 @@ struct CaseView {
             case .interrogation:
                 return "?"
             case .mine:
-                return "M"
+                return "💣"
             }
         }
     }
     
     func caseColor() -> UIColor {
-        if myCase.isTested {
-            return .darkGray
-        } else {
+        if myCase.isTested || myCase.flag != .none {
             return .lightGray
+        } else {
+            return .darkGray
         }
     }
 }

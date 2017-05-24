@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1Ij-kX-5SW">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="GameViewController" customModule="AV_Demineur" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="GameViewController" customModule="AV_Demineur" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -22,18 +22,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ofu-98-vFz">
-                                <rect key="frame" x="0.0" y="64" width="375" height="375"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="ofu-98-vFz" secondAttribute="height" multiplier="1:1" id="kcf-PU-6vs"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="u8F-iP-ZzG">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ofu-98-vFz">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <color key="backgroundColor" red="1" green="0.15584700900000001" blue="0.12585272119999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewLayout key="collectionViewLayout" id="qFy-HF-q72" customClass="DemineurLayout" customModule="AV_Demineur" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellGame" id="xXS-zw-hpe" customClass="CellGame" customModule="AV_Demineur" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -66,7 +58,7 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z0g-DS-x5j">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXU-0n-pZW">
                                         <rect key="frame" x="10" y="10" width="55.5" height="24"/>
@@ -100,21 +92,14 @@
                                     <constraint firstItem="IXU-0n-pZW" firstAttribute="top" secondItem="Z0g-DS-x5j" secondAttribute="top" constant="10" id="uuh-NB-hS2"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bog-Z9-oyQ">
-                                <rect key="frame" x="0.0" y="439" width="375" height="228"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Z0g-DS-x5j" secondAttribute="trailing" id="0tw-x9-XBE"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ofu-98-vFz" secondAttribute="bottom" id="3iN-TF-Nfa"/>
                             <constraint firstItem="Z0g-DS-x5j" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CcB-Jg-TkE"/>
-                            <constraint firstItem="bog-Z9-oyQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MEd-B8-vYL"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="bog-Z9-oyQ" secondAttribute="bottom" id="Z5z-bt-Wcq"/>
                             <constraint firstItem="ofu-98-vFz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Zdi-tl-mqO"/>
-                            <constraint firstAttribute="trailing" secondItem="bog-Z9-oyQ" secondAttribute="trailing" id="kax-AH-pyi"/>
                             <constraint firstItem="ofu-98-vFz" firstAttribute="top" secondItem="Z0g-DS-x5j" secondAttribute="bottom" id="leU-qt-auT"/>
-                            <constraint firstItem="bog-Z9-oyQ" firstAttribute="top" secondItem="ofu-98-vFz" secondAttribute="bottom" id="qIb-f8-S8U"/>
                             <constraint firstItem="Z0g-DS-x5j" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="uAU-zD-cB2"/>
                             <constraint firstAttribute="trailing" secondItem="ofu-98-vFz" secondAttribute="trailing" id="wQI-hx-Q3j"/>
                         </constraints>
@@ -128,6 +113,124 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1345" y="809"/>
+        </scene>
+        <!--The rules-->
+        <scene sceneID="oEf-xM-W4s">
+            <objects>
+                <viewController title="The rules" automaticallyAdjustsScrollViewInsets="NO" id="ErK-3U-Qk9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0JS-a6-gHx"/>
+                        <viewControllerLayoutGuide type="bottom" id="5jW-NL-Fxb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="grm-Wq-2rF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RLb-7f-ngv">
+                                <rect key="frame" x="26" y="74" width="323" height="583"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Le champ de mines est représenté par une grille, qui peut avoir différentes formes : deux ou trois dimensions, pavage rectangulaire ou non, etc.
+
+Chaque case de la grille peut soit cacher une mine, soit être vide. Le but du jeu est de découvrir toutes les cases libres sans faire exploser les mines, c'est-à-dire sans cliquer sur les cases qui les dissimulent.
+
+Lorsque le joueur clique sur une case libre comportant au moins une mine dans l'une de ses cases avoisinantes, un chiffre apparaît, indiquant ce nombre de mines. Si en revanche toutes les cases adjacentes sont vides, une case vide est affichée et la même opération est répétée sur ces cases, et ce jusqu'à ce que la zone vide soit entièrement délimitée par des chiffres. En comparant les différentes informations récoltées, le joueur peut ainsi progresser dans le déminage du terrain. S'il se trompe et clique sur une mine, il a perdu.
+
+On peut signaler les cases contenant des mines présumées par un drapeau en cliquant sur le bouton droit de la souris — mais ce n'est aucunement obligatoire. Il faut faire attention à ne pas signaler une case saine par un drapeau, car cela peut induire en erreur ; ce n'est toutefois pas aussi pénalisant que de découvrir une mine.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RLb-7f-ngv" firstAttribute="top" secondItem="0JS-a6-gHx" secondAttribute="bottom" constant="10" id="Jy1-1n-xDP"/>
+                            <constraint firstItem="5jW-NL-Fxb" firstAttribute="top" secondItem="RLb-7f-ngv" secondAttribute="bottom" constant="10" id="QH3-4O-Fc2"/>
+                            <constraint firstItem="RLb-7f-ngv" firstAttribute="leading" secondItem="grm-Wq-2rF" secondAttribute="leadingMargin" constant="10" id="Tgc-9t-MO7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="RLb-7f-ngv" secondAttribute="trailing" constant="10" id="d2l-gz-B7x"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vgb-uk-joK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1345" y="1527"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Hw2-Lw-g9V">
+            <objects>
+                <navigationController id="1Ij-kX-5SW" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ncl-SG-Aah">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="PEK-QD-OBP" kind="relationship" relationship="rootViewController" id="61h-H1-ZdC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lss-FS-oGs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-339" y="810"/>
+        </scene>
+        <!--Menu-->
+        <scene sceneID="cD8-WN-DUa">
+            <objects>
+                <viewController title="Menu" id="PEK-QD-OBP" customClass="MenuViewController" customModule="AV_Demineur" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ct7-tn-RkJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="H1A-zq-lFe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cF3-rk-V1y">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFy-ME-nDQ">
+                                <rect key="frame" x="171" y="258" width="33" height="30"/>
+                                <state key="normal" title="Easy"/>
+                                <connections>
+                                    <action selector="btnEasyPressed:" destination="PEK-QD-OBP" eventType="touchUpInside" id="8k7-0I-uSn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MZN-Fb-fsU">
+                                <rect key="frame" x="160" y="318" width="55" height="30"/>
+                                <state key="normal" title="Medium"/>
+                                <connections>
+                                    <action selector="btnMediumPressed:" destination="PEK-QD-OBP" eventType="touchUpInside" id="cGa-U8-ArV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zvn-WN-BsA">
+                                <rect key="frame" x="170" y="378" width="34" height="30"/>
+                                <state key="normal" title="Hard"/>
+                                <connections>
+                                    <action selector="btnHardPressed:" destination="PEK-QD-OBP" eventType="touchUpInside" id="7xW-Df-3hm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUX-05-Stt">
+                                <rect key="frame" x="168" y="617" width="38" height="30"/>
+                                <state key="normal" title="HELP"/>
+                                <connections>
+                                    <segue destination="ErK-3U-Qk9" kind="show" id="dVR-hm-Hlf"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="H1A-zq-lFe" firstAttribute="top" secondItem="zUX-05-Stt" secondAttribute="bottom" constant="20" id="8U6-uX-G1U"/>
+                            <constraint firstItem="MZN-Fb-fsU" firstAttribute="top" secondItem="HFy-ME-nDQ" secondAttribute="bottom" constant="30" id="C8m-OI-lge"/>
+                            <constraint firstItem="MZN-Fb-fsU" firstAttribute="centerX" secondItem="cF3-rk-V1y" secondAttribute="centerX" id="I5c-Kr-Jqp"/>
+                            <constraint firstItem="Zvn-WN-BsA" firstAttribute="centerX" secondItem="cF3-rk-V1y" secondAttribute="centerX" id="M3U-33-pfX"/>
+                            <constraint firstItem="Zvn-WN-BsA" firstAttribute="top" secondItem="MZN-Fb-fsU" secondAttribute="bottom" constant="30" id="aPy-is-hu9"/>
+                            <constraint firstItem="HFy-ME-nDQ" firstAttribute="centerX" secondItem="cF3-rk-V1y" secondAttribute="centerX" id="bgp-xm-4V8"/>
+                            <constraint firstItem="zUX-05-Stt" firstAttribute="centerX" secondItem="cF3-rk-V1y" secondAttribute="centerX" id="m25-zO-0c5"/>
+                            <constraint firstItem="MZN-Fb-fsU" firstAttribute="centerY" secondItem="cF3-rk-V1y" secondAttribute="centerY" id="pjM-uT-i3B"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Demineur" id="L67-nN-8s3"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="ToTheGame" id="PUA-AH-V6Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h7e-fs-T08" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="508" y="809"/>
         </scene>
     </scenes>
     <resources>
