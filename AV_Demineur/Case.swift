@@ -66,6 +66,8 @@ class Case {
 
 struct CaseView {
     
+    static let tColor:[UIColor] = [.black, .blue, .red, .green, .purple, .brown, .cyan, .orange, .white]
+    
     let myCase:Case
     
     init(initCase:Case) {
@@ -101,6 +103,14 @@ struct CaseView {
             return .lightGray
         } else {
             return .darkGray
+        }
+    }
+    
+    func textColor() -> UIColor {
+        if myCase.isTested || myCase.flag != .none {
+            return CaseView.tColor[myCase.value]
+        } else {
+            return .black
         }
     }
 }

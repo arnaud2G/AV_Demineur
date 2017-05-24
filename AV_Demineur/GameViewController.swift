@@ -77,15 +77,10 @@ extension GameViewController:UICollectionViewDelegate, UICollectionViewDataSourc
         return gameManager.gameLevel.nCase().nCol
     }
     
-    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return gameManager.gameLevel.sizeCase()
-    }*/
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellGame", for: indexPath) as! CellGame
-        cell.lblValue.text = gameDistributionView[indexPath.section][indexPath.row].caseText()
-        cell.lblValue.backgroundColor = gameDistributionView[indexPath.section][indexPath.row].caseColor()
+        cell.setCase(myCase: gameDistributionView[indexPath.section][indexPath.row])
         return cell
     }
     
@@ -162,6 +157,12 @@ class CellGame:UICollectionViewCell {
         super.init(coder: aDecoder)
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 1
+    }
+    
+    func setCase(myCase:CaseView) {
+        lblValue.text = myCase.caseText()
+        lblValue.textColor = myCase.textColor()
+        lblValue.backgroundColor = myCase.caseColor()
     }
 }
 

@@ -24,7 +24,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ofu-98-vFz">
                                 <rect key="frame" x="0.0" y="108" width="375" height="559"/>
-                                <color key="backgroundColor" red="1" green="0.15584700900000001" blue="0.12585272119999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewLayout key="collectionViewLayout" id="qFy-HF-q72" customClass="DemineurLayout" customModule="AV_Demineur" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellGame" id="xXS-zw-hpe" customClass="CellGame" customModule="AV_Demineur" customModuleProvider="target">
