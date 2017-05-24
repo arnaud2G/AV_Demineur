@@ -23,17 +23,17 @@
 /* Begin PBXFileReference section */
 		A522DF051ED21B40002D6057 /* AV_Demineur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AV_Demineur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A522DF081ED21B40002D6057 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A522DF0A1ED21B40002D6057 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		A522DF0A1ED21B40002D6057 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = Controllers/GameViewController.swift; sourceTree = "<group>"; };
 		A522DF0D1ED21B40002D6057 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A522DF0F1ED21B40002D6057 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A522DF121ED21B40002D6057 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A522DF141ED21B40002D6057 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A522DF1B1ED21B5B002D6057 /* GamerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GamerManager.swift; path = Manager/GamerManager.swift; sourceTree = "<group>"; };
-		A522DF1E1ED21E9F002D6057 /* Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
-		A522DF201ED220C5002D6057 /* Int+Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Random.swift"; sourceTree = "<group>"; };
-		A543C15E1ED501DE00203115 /* DemineurCustomLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemineurCustomLayout.swift; sourceTree = "<group>"; };
-		A5AA7C8E1ED45749006C04B2 /* Array+Chunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Chunk.swift"; sourceTree = "<group>"; };
-		A5DAB0B01ED4A6660016DD9A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		A522DF1B1ED21B5B002D6057 /* GamerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GamerManager.swift; path = Managers/GamerManager.swift; sourceTree = "<group>"; };
+		A522DF1E1ED21E9F002D6057 /* Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Case.swift; path = Modeles/Case.swift; sourceTree = "<group>"; };
+		A522DF201ED220C5002D6057 /* Int+Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Int+Random.swift"; path = "Extensions/Int+Random.swift"; sourceTree = "<group>"; };
+		A543C15E1ED501DE00203115 /* DemineurCustomLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DemineurCustomLayout.swift; path = Layout/DemineurCustomLayout.swift; sourceTree = "<group>"; };
+		A5AA7C8E1ED45749006C04B2 /* Array+Chunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+Chunk.swift"; path = "Extensions/Array+Chunk.swift"; sourceTree = "<group>"; };
+		A5DAB0B01ED4A6660016DD9A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = Controllers/MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
